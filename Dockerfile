@@ -1,14 +1,11 @@
-# Use official PHP image
-FROM php:8.2-cli
+# Use official PHP image with Apache
+FROM php:8.2-apache
 
-# Set working directory
-WORKDIR /app
+# Copy all files into the web root
+COPY . /var/www/html/
 
-# Copy project files into the container
-COPY . .
+# Expose port 80 for Render
+EXPOSE 80
 
-# Expose port Render expects
-EXPOSE 10000
-
-# Start PHP built-in server
-CMD ["php", "-S", "0.0.0.0:10000"]
+# Enable Apache rewrite module (not required but good practice)
+RUN a2enmod rewrite
