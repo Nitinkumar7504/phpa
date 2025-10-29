@@ -23,13 +23,13 @@ $names = array("Rock", "Paper", "Scissors");
 $result = false;
 
 if (isset($_POST['human'])) {
-    $human = $_POST['human'];
-    if ($human == -1) {
-        $result = "Please select a strategy and press Play.";
-    } else {
+    $human = $_POST['human'] + 0; // ensure integer
+    if ($human >= 0 && $human <= 2) {
         $computer = rand(0, 2);
-        $result = "Human={$names[$human]} Computer={$names[$computer]} Result=";
+        $result = "Your Play={$names[$human]} Computer Play={$names[$computer]} Result=";
         $result .= check($computer, $human);
+    } else {
+        $result = "Please select a strategy and press Play.";
     }
 }
 ?>
@@ -56,13 +56,13 @@ if (isset($_POST['human'])) {
 <pre>
 <?php
 if ($result !== false) {
-    echo $result . "\n";
+    echo htmlentities($result) . "\n";
 }
 
 for ($c = 0; $c < 3; $c++) {
     for ($h = 0; $h < 3; $h++) {
         $r = check($c, $h);
-        echo "Human={$names[$h]} Computer={$names[$c]} Result=$r\n";
+        echo "Your Play={$names[$h]} Computer Play={$names[$c]} Result=$r\n";
     }
 }
 ?>
