@@ -1,25 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>d8fc21af - Rock Paper Scissors</title>
-</head>
-<body>
-<h1>Rock Paper Scissors</h1>
 <?php
+// Start session BEFORE any HTML output
 session_start();
 
-if (!isset($_GET['name'])) {
+if (!isset($_GET['name']) || strlen($_GET['name']) < 1) {
     die("Name parameter missing");
 }
 
 if (isset($_POST['logout'])) {
-    header('Location: index.php');
+    header("Location: index.php");
     return;
 }
 
 $name = htmlentities($_GET['name']);
-echo "<p>Welcome: $name</p>";
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>d8fc21af - Rock Paper Scissors</title>
+</head>
+<body>
+<h1>Rock Paper Scissors</h1>
+<p>Welcome: <?= $name ?></p>
 
 <form method="post">
     <select name="human">
@@ -55,7 +56,6 @@ if (isset($_POST['human'])) {
 }
 
 echo "\n";
-# Test all possible outcomes for autograder
 $names = array("Rock", "Paper", "Scissors");
 for($c=0; $c<3; $c++) {
     for($h=0; $h<3; $h++) {
